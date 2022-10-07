@@ -101,7 +101,7 @@
       file:
         path: /var/lib/tomcat9/webapps/ROOT
         state: absent
-      when: install_status is succeeded
+      when: install_status.changed and install_status is succeeded
 
     - name: Delete new artifact locally
       file:
