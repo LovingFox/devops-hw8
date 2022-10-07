@@ -53,7 +53,7 @@
       fetch:
         src: /root/boxfuse/target/hello-1.0.war
         dest: /root/hello-1.0.war
-      when: build_status.changed
+      when: build_status is succeeded
       register: fetch_status
 
     - name: Backup new artifact locally
@@ -61,7 +61,7 @@
         src: /root/hello-1.0.war
         dest: "/root/hello-1.0_{{ ansible_date_time.iso8601_basic_short }}.war"
       delegate_to: localhost
-      when: fetch_status.changed
+      when: fetch_status is succeeded
 
 
 - name: install tomcat
@@ -94,3 +94,11 @@
         src: /root/hello-1.0.war
         dest: /var/lib/tomcat9/webapps/root.war
       when: artifact_file.stat.exists
+      register: install_status
+
+    - name: Delete new artifact locally
+      file:
+        path: /root/hello-1.0.war
+        state: absent
+      delegate_to: localhost
+      when: install_status is succeeded
