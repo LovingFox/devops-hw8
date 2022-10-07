@@ -47,6 +47,14 @@
         chdir: /root/boxfuse
         cmd: mvn package
       when: not artifact_file.stat.exists
+      register: build_status
+
+    - name: Fetch file to the local machine
+      fetch:
+        src: /root/boxfuse/target/hello-1.0.war
+        dest: "/root/hello-1.0_{{ ansible_date_time.iso8601_basic_short }}.war"
+      when: build_status.changed
+      register: fetch_status
 
 
 - name: install tomcat
