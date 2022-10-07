@@ -1,0 +1,19 @@
+---
+- name: install tomcat
+  hosts: web
+  become: true
+
+  tasks:
+    - name: Update repositories cache
+      ansible.builtin.apt:
+        update_cache: true
+
+    - name: Ensure tomcat package is present
+      ansible.builtin.apt:
+        name: tomcat9
+        state: present
+
+    - name: Ensure tomcat is running
+      ansible.builtin.ervice:
+        name: tomcat9.service
+        state: started
