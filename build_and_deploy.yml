@@ -26,7 +26,7 @@
     - name: Clone a github repository boxfuse
       git:
         repo: https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
-        dest: /root/
+        dest: /root/boxfuse
         clone: true
         update: true
 
