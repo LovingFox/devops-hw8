@@ -76,4 +76,8 @@
         name: tomcat9.service
         state: started
 
-
+    - name: Install the artifact
+      copy:
+        src: "{{ fetch_status.dest }}"
+        dest: /var/lib/tomcat9/webapps/root.war
+      when: fetch_status.changed
