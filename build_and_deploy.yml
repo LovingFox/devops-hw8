@@ -52,9 +52,16 @@
     - name: Fetch file to the local machine
       fetch:
         src: /root/boxfuse/target/hello-1.0.war
-        dest: "/root/hello-1.0_{{ ansible_date_time.iso8601_basic_short }}.war"
+        dest: /root/hello-1.0.war
       when: build_status.changed
       register: fetch_status
+
+    - name: Backup new artifact locally
+      copy:
+        src: /root/hello-1.0.war
+        dest: "/root/hello-1.0_{{ ansible_date_time.iso8601_basic_short }}.war"
+      delegate_to: localhost
+      when: fetch_status.changed
 
 
 - name: install tomcat
@@ -76,8 +83,14 @@
         name: tomcat9.service
         state: started
 
-    - name: Install the artifact
+    - name: Check new artifact exists
+      stat:
+        path: /root/hello-1.0.war
+      delegate_to: localhost
+      register: artifact_file
+
+    - name: Install new artifact
       copy:
-        src: "{{ fetch_status.dest }}"
+        src: /root/hello-1.0.war
         dest: /var/lib/tomcat9/webapps/root.war
-      when: fetch_status.changed
+      when: artifact_file.stat.exists
