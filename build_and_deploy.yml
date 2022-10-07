@@ -5,15 +5,15 @@
 
   tasks:
     - name: Update repositories cache
-      ansible.builtin.apt:
+      apt:
         update_cache: true
 
     - name: Ensure tomcat package is present
-      ansible.builtin.apt:
+      apt:
         name: tomcat9
         state: present
 
     - name: Ensure tomcat is running
-      ansible.builtin.ervice:
+      service:
         name: tomcat9.service
         state: started
