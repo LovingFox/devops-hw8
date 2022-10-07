@@ -79,7 +79,6 @@
       service:
         name: tomcat9.service
         state: started
-        update_cache: true
 
     - name: Check new artifact exists
       stat:
