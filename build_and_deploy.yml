@@ -93,7 +93,7 @@
     - name: Install new artifact
       copy:
         src: /root/hello-1.0.war
-        dest: /var/lib/tomcat9/webapps/root.war
+        dest: /var/lib/tomcat9/webapps/ROOT.war
       when: artifact_file.stat.exists
       register: install_status
 
