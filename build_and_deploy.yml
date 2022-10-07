@@ -97,6 +97,12 @@
       when: artifact_file.stat.exists
       register: install_status
 
+    - name: Delete old artifact directory
+      file:
+        path: /var/lib/tomcat9/webapps/ROOT
+        state: absent
+      when: install_status is succeeded
+
     - name: Delete new artifact locally
       file:
         path: /root/hello-1.0.war
