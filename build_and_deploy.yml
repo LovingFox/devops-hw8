@@ -40,7 +40,7 @@
     - name: Check the artifact exists
       stat:
         path: /root/boxfuse/target/hello-1.0.war
-        register: artifact_file
+      register: artifact_file
 
     - name: Build an artifact if it doesn't exist
       shell:
