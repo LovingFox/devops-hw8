@@ -4,24 +4,23 @@
   become: true
 
   tasks:
-    - name: Update repositories cache
-      apt:
-        update_cache: true
-
     - name: Ensure default-jre package is present
       apt:
         name: default-jre
         state: present
+        update_cache: true
 
     - name: Ensure maven package is present
       apt:
         name: maven
         state: present
+        update_cache: true
 
     - name: Ensure git package is present
       apt:
         name: git
         state: present
+        update_cache: true
 
     - name: Clone a github repository boxfuse
       git:
@@ -70,19 +69,17 @@
   become: true
 
   tasks:
-    - name: Update repositories cache
-      apt:
-        update_cache: true
-
     - name: Ensure tomcat package is present
       apt:
         name: tomcat9
         state: present
+        update_cache: true
 
     - name: Ensure tomcat is running
       service:
         name: tomcat9.service
         state: started
+        update_cache: true
 
     - name: Check new artifact exists
       stat:
