@@ -29,6 +29,24 @@
         dest: /root/boxfuse
         clone: true
         update: true
+      register: git_status
+
+    - name: Clean maven profect if git repo changed
+      shell:
+        chdir: /root/boxfuse
+        cmd: mvn clean
+      when: git_status.changed
+
+    - name: Check the artifact exists
+      stat:
+        path: /root/boxfuse/target/hello-1.0.war
+        register: artifact_file
+
+    - name: Build an artifact if it doesn't exist
+      shell:
+        chdir: /root/boxfuse
+        cmd: mvn package
+      when: not artifact_file.stat.exists
 
 
 - name: install tomcat
