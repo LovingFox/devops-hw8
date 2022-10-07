@@ -53,6 +53,7 @@
       fetch:
         src: /root/boxfuse/target/hello-1.0.war
         dest: /root/hello-1.0.war
+        flat: true
       when: build_status is succeeded
       register: fetch_status
 
