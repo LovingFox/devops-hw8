@@ -1,4 +1,36 @@
 ---
+- name: build an artifact
+  hosts: builder
+  become: true
+
+  tasks:
+    - name: Update repositories cache
+      apt:
+        update_cache: true
+
+    - name: Ensure default-jre package is present
+      apt:
+        name: default-jre
+        state: present
+
+    - name: Ensure maven package is present
+      apt:
+        name: maven
+        state: present
+
+    - name: Ensure git package is present
+      apt:
+        name: git
+        state: present
+
+    - name: Clone a github repository boxfuse
+      git:
+        repo: https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
+        dest: /root/
+        clone: true
+        update: true
+
+
 - name: install tomcat
   hosts: web
   become: true
@@ -17,3 +49,5 @@
       service:
         name: tomcat9.service
         state: started
+
+
