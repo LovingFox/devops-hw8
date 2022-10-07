@@ -54,7 +54,7 @@
         src: /root/boxfuse/target/hello-1.0.war
         dest: /root/hello-1.0.war
         flat: true
-      when: build_status is succeeded
+      when: build_status.changed and build_status is succeeded
       register: fetch_status
 
     - name: Backup new artifact locally
@@ -62,7 +62,7 @@
         src: /root/hello-1.0.war
         dest: "/root/hello-1.0_{{ ansible_date_time.iso8601_basic_short }}.war"
       delegate_to: localhost
-      when: fetch_status is succeeded
+      when: fetch_status.changed and fetch_status is succeeded
 
 
 - name: install tomcat
