@@ -6,6 +6,14 @@
 3. Backup the new artifact on the Local Machine at the same dir
 4. Deploy the new artifact on the Second Node (*web*)
 
+#### Deploy project
+
 ```
 ansible-playbook build_and_deploy.yml
+```
+
+#### Destroy project
+
+```
+ansible-playbook destroy.yml
 ```
