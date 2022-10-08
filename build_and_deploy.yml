@@ -30,7 +30,7 @@
         update: true
       register: git_status
 
-    - name: Clean maven profect if git repo changed
+    - name: Clean maven project if git repo changed
       shell:
         chdir: /root/boxfuse
         cmd: mvn clean
@@ -64,7 +64,7 @@
       when: fetch_status.changed and fetch_status is succeeded
 
 
-- name: install tomcat
+- name: deploy an artifact
   hosts: web
   become: true
 
