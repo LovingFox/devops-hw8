@@ -1,0 +1,41 @@
+---
+- name: destroy builder
+  hosts: builder
+  become: true
+
+  tasks:
+    - name: Ensure default-jre package is NOT present
+      apt:
+        name: default-jre
+        state: absent
+
+    - name: Ensure maven package is NOT present
+      apt:
+        name: maven
+        state: absent
+
+    - name: Ensure git package is NOT present
+      apt:
+        name: git
+        state: absent
+
+    - name: Check the repo is absent
+      file:
+        path: /root/boxfuse
+        state: absent
+
+
+- name: destroy the web server
+  hosts: web
+  become: true
+
+  tasks:
+    - name: Check webapps is absent
+      file:
+        path: /var/lib/tomcat9/webapps
+        state: absent
+
+    - name: Ensure tomcat package is NOT present
+      apt:
+        name: tomcat9
+        state: absent
